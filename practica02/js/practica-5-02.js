@@ -2,8 +2,8 @@ window.onload = Principal;
 
 function Principal() {
     document.primero.provincia.readOnly = true;
-    document.primero.imgprovincia.src = "imagenes/cordoba.jpg"
-    document.primero.img_aficion.src = "imagenes/musica.jpg"
+    document.primero.imgprovincia.src = "imagenes/cordoba.jpg";
+    document.primero.img_aficion.src = "imagenes/musica.jpg";
 
     document.primero.nif.value += "";
     document.primero.nombre.value += "";
@@ -29,7 +29,7 @@ function Principal() {
     document.primero.provincia.onblur = SalirCaja;
     //document.primero.cp.onkeypress = SoloNumeros; //seria con un array
     document.primero.cp.onblur = ValidarCP;
-    document.onkeyup= CambiarImgFondo;
+    document.onkeyup = FondoImgForm;
 
 }
 
@@ -44,26 +44,23 @@ function SalirCaja(evento) {
     eventos.target.style.backgroundColor = "white";
 }
 
-//CambiarImgFondo()
-/*
-function SoloNumeros(evento) {
-    let eventos = evento || window.event;
-    let enviar = true;
-    let caracter = String.fromCharCode(eventos.charCode).toLowerCase();
-    if (caracter < "0" || caracter > "9") {
-        enviar = false;
+function FondoImgForm(evento){
+    let eventos=evento || window.event;
+    let imagenes = ["imagenes/ParisTorreEiffel.jpg", "imagenes/VeneciaPlazaSanMarcos.jpg",
+    "imagenes/lisboatorrebelem.jpg","imagenes/atenaacropoli.jpg", "imagenes/romafontanaditrevi.jpg"]
+    if(eventos.keyCode == 114 && eventos.ctrlKey){ //si se cumple todo esto
+        let imgRandom = imagenes[Math.floor(Math.random() * imagenes.length)];
+        document.primero.style.backgroundImage = 'url('+imgRandom+')';
     }
-    return enviar;
 }
-*/
+
 function ValidarCP(evento) {
     let eventos = evento || window.event;
     eventos.target.style.backgroundColor = "white";
     let cp = eventos.target.value;
     let posicion= 0;
 	let esnumero=true;
-    let cpInt = parseInt(cp, 10);
-    if (cp == "" || cp.length < 4 || cp.length > 5 || cpInt < 1000 || cpInt > 52999) {
+    if (cp == "" || cp.length < 4 || cp.length > 5 ) {
         esnumero=false;
     }
     else{
@@ -83,16 +80,40 @@ function ValidarCP(evento) {
     "Valencia/València", "Valladolid","Vizcaya","Zamora","Zaragoza","Ceuta", "Melilla"];
 
     if (esnumero) {
-        for (let index = 0; index < provincias.length; index++) {
-            let numProv = index+1;
-            if (cp.length == 4) {
-                if (cp.charAt(0) == numProv.toString()) {
-                    document.primero.provincia.value += provincias[index];
+        let cpInt = parseInt(cp, 10);
+        if (cpInt >= 1000 || cpInt <= 52999) {
+            for (let index = 0; index < provincias.length; index++) {
+                let numProv = index+1;
+                if (cp.length == 4) {
+                    if (cp.charAt(0) == numProv.toString()) {
+                        document.primero.provincia.value += provincias[index];
+                    }
                 }
-            }
-            else if(cp.substring(0,2) == numProv.toString()){
-                document.primero.provincia.value += provincias[index];
+                else{
+                    if (cp.charAt(0) == 0) {
+                        if (cp.charAt(1) == numProv.toString()) {
+                            document.primero.provincia.value += provincias[index];
+                        }
+                    }
+                    else{
+                        if (cp.substring(0,2) == numProv.toString()) {
+                            document.primero.provincia.value += provincias[index];
+                        }
+                    }
+                }
             }
         }
     }
 }
+
+/*
+function SoloNumeros(evento) {
+    let eventos = evento || window.event;
+    let enviar = true;
+    let caracter = String.fromCharCode(eventos.charCode).toLowerCase();
+    if (caracter < "0" || caracter > "9") {
+        enviar = false;
+    }
+    return enviar;
+}
+*/
