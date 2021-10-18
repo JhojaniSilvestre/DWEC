@@ -29,6 +29,7 @@ function Principal() {
     document.primero.provincia.onblur = SalirCaja;
     //document.primero.cp.onkeypress = SoloNumeros; //seria con un array
     document.primero.cp.onblur = ValidarCP;
+    document.onkeyup= CambiarImgFondo;
 
 }
 
@@ -42,6 +43,8 @@ function SalirCaja(evento) {
     let eventos = evento || window.event;
     eventos.target.style.backgroundColor = "white";
 }
+
+//CambiarImgFondo()
 /*
 function SoloNumeros(evento) {
     let eventos = evento || window.event;
@@ -59,8 +62,8 @@ function ValidarCP(evento) {
     let cp = eventos.target.value;
     let posicion= 0;
 	let esnumero=true;
-
-    if (cp == "" || cp.length < 5 || cp.length > 5) {
+    let cpInt = parseInt(cp, 10);
+    if (cp == "" || cp.length < 4 || cp.length > 5 || cpInt < 1000 || cpInt > 52999) {
         esnumero=false;
     }
     else{
@@ -82,8 +85,8 @@ function ValidarCP(evento) {
     if (esnumero) {
         for (let index = 0; index < provincias.length; index++) {
             let numProv = index+1;
-            if (cp.charAt(0) == "0") {
-                if (cp.charAt(1) == numProv.toString()) {
+            if (cp.length == 4) {
+                if (cp.charAt(0) == numProv.toString()) {
                     document.primero.provincia.value += provincias[index];
                 }
             }
