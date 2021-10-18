@@ -27,12 +27,34 @@ function Principal() {
     document.primero.cp.onblur = SalirCaja;
     document.primero.provincia.onfocus = EntrarCaja;
     document.primero.provincia.onblur = SalirCaja;
-    //document.primero.cp.onkeypress = SoloNumeros; //seria con un array
     document.primero.cp.onblur = ValidarCP;
     document.onkeyup = FondoImgForm;
+    document.primero.provin.checked = ProvinImg;
 
 }
 
+function ProvinImg(evento){
+    let eventos = evento || window.event;
+    var provin;
+    for (let index = 0; index < eventos.target.length; index++) {
+        if (eventos.target[index].checked) {
+            provin = eventos.target[index].value.trim();
+        }
+    }
+
+    if(provin == "Cordoba"){
+        document.primero.imgprovincia.src = "imagenes/cordoba.jpg";
+    }
+    else if(provin == "León"){
+        document.primero.imgprovincia.src = "imagenes/leon.jpg";
+    }
+    else if(provin == "Segovia"){
+        document.primero.imgprovincia.src = "imagenes/segovia.jpg";
+    }
+    else if(provin == "Sevilla"){
+        document.primero.imgprovincia.src = "imagenes/sevilla.jpg";
+    }
+}
 
 function EntrarCaja(evento) {
     let eventos = evento || window.event;
